@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 
-
 const BooksList = () => {
   const [books, setBooks] = useState([]);
 
-  const getBooks = () => {
-    
-  };
+  const getBooks = () => {};
 
-  const deleteHandler = () => {
-  };
+  const deleteHandler = () => {};
 
   return (
     <>
@@ -32,32 +28,20 @@ const BooksList = () => {
           </tr>
         </thead>
         <tbody>
-          {books.map((doc, index) => {
-            return (
-              <tr key={doc.id}>
-                <td>{index + 1}</td>
-                <td>{doc.title}</td>
-                <td>{doc.author}</td>
-                <td>{doc.status}</td>
-                <td>
-                  <Button
-                    variant="secondary"
-                    className="edit"
-                    onClick={{}}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    className="delete"
-                    onClick={{}}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
+          <tr>
+            <td>1</td>
+            <td>React.js</td>
+            <td>Mukho</td>
+            <td>available</td>
+            <td>
+              <Button variant="secondary" className="edit" onClick={{}}>
+                Edit
+              </Button>
+              <Button variant="danger" className="delete" onClick={{}}>
+                Delete
+              </Button>
+            </td>
+          </tr>
         </tbody>
       </Table>
     </>
