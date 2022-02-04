@@ -17,7 +17,6 @@ const AddBook = ({ id, setBookId }) => {
     
   };
 
-
   return (
     <>
       <div className="p-4 box">
