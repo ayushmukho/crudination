@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Alert, InputGroup, Button, ButtonGroup } from "react-bootstrap";
 
+import BookDataService from "../services/book.services";
+
 const AddBook = ({ id, setBookId }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -8,18 +10,48 @@ const AddBook = ({ id, setBookId }) => {
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState({ error: false, msg: "" });
 
-
   const handleSubmit = async (e) => {
-    
+    e.preventDefault();
+    setMessage("");
+
+    if (title === "" || author === "") {
+      setMessage({ error: true, msg: "All fields are mandatory" });
+      return;
+    }
+
+    const newBook = {
+      title,
+      author,
+      status,
+    };
+
+    console.log("newBook", newBook);
+
+    try {
+      await BookDataService.addBooks(newBook);
+      setMessage({ error: false, msg: "New book added successfully." });
+    } catch (err) {
+      setMessage({ error: true, msg: err.message });
+    }
+
+    setTitle("");
+    setAuthor("");
   };
 
-  const editHandler = async () => {
-    
-  };
+  const editHandler = async () => {};
 
   return (
     <>
       <div className="p-4 box">
+        {message?.msg && (
+          <Alert
+            variant={message?.error ? "danger" : "success"}
+            dismissible
+            onClose={() => setMessage("")}
+          >
+            {message?.msg}
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBookTitle">
             <InputGroup>
