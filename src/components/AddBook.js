@@ -28,8 +28,14 @@ const AddBook = ({ id, setBookId }) => {
     console.log("newBook", newBook);
 
     try {
-      await BookDataService.addBooks(newBook);
-      setMessage({ error: false, msg: "New book added successfully." });
+      if (id !== undefined && id !== "") {
+        await BookDataService.updateBook(id, newBook);
+        setBookId("");
+        setMessage({ error: false, msg: "Updated successfully!" });
+      } else {
+        await BookDataService.addBooks(newBook);
+        setMessage({ error: false, msg: "New Book added successfully!" });
+      }
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
@@ -38,7 +44,25 @@ const AddBook = ({ id, setBookId }) => {
     setAuthor("");
   };
 
-  const editHandler = async () => {};
+  const editHandler = async () => {
+    setMessage("");
+    try {
+      const docSnap = await BookDataService.getBook(id);
+      console.log("the record is :", docSnap.data());
+      setTitle(docSnap.data().title);
+      setAuthor(docSnap.data().author);
+      setStatus(docSnap.data().status);
+    } catch (err) {
+      setMessage({ error: true, msg: err.message });
+    }
+  };
+
+  useEffect(() => {
+    console.log("The id here is : ", id);
+    if (id !== undefined && id !== "") {
+      editHandler();
+    }
+  }, [id]);
 
   return (
     <>
